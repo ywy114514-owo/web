@@ -1,0 +1,71 @@
+<hyml>  
+        <head>
+            <title>0316-CSS選擇器與顏色設定</title>
+            <!--HTML註解-->
+            <style>
+                /*CSS註解*/
+                /*CSS基礎與法
+                選擇器 Selector{
+                    property: value;
+                    屬性:設定值;
+                    屬性:設定值;
+            }            
+                選擇器有三種寫法:  #id / .class /html_tag
+                */
+                /*
+                display:block; 設定為區塊元素，預設是 頁寬內容高，可設定寬高，自己成行，不與其他元素同行。
+                display:inline; 設定為行內元素，預設是 內容寬高，不可設定寬高，可與其他元素同行。
+                display:inline-block; 設定為行內區塊元素，可設定寬高，不與其他元素同行。
+                */
+                div {
+                    width:200px;
+                    height:200px;
+                    display:inline-block;/* div 的預設值是 block*/
+                    background: green;
+                }
+                span {
+                    width:200px;
+                    height:200px;
+                    display:inline-block;/*span 的預設值是 inline*/
+                    background: pink;
+                }
+                #d1{
+                    background: blue;
+                    background-color: black;
+               }
+                /*
+                    同一個屬性，後寫的設定會覆蓋先寫的設定。與寫在class的順序無關。
+                    除非有!important 改變重要性。
+                    優先順序: !important > #id > .class > html_tag
+                */
+                .c1 {
+                    background: red !important;
+                }
+                .c2 {
+                    background: #114514;
+                }
+                /*CSS顏色的表示法:
+                    1.常見英文單字
+                    2.#RRGGBB #000000-#FFFFFF(標準寫法)
+                    3.rgb(r,g,b)0~255(三原色光的強度)
+                    4.hsl(h色相0~360,s彩度0%~100%,L亮度0%~100%)
+                    5.rgba(r,g,b,a 0~1可見度)
+                    6.hsla(h,s,l,a可見度0~1)
+                */
+
+            </style>
+        </head>
+        <body>
+            <!--div:區塊容器 block-->
+            <div id="d1" class="c1"></div>
+            <div id="d2" class="c1 c2"></div>
+
+
+
+            <!--SPAN:行內容器 inline-->
+            <span id="s3" class="c2"></span>
+            <span id="s4" class="c2 c1"></span>
+
+
+        </body>
+</hyml>
