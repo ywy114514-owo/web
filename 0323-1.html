@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>0323-CSS漸層</title>
+    <style>
+        div{
+            margin-bottom: 10px;
+            width:400px;
+            height:100px;
+        }
+        #d1{
+            /*linear-gradient 線性漸層:
+               漸層方向預設上到下,第一個參數可以設定方向，有兩種寫法:
+               1.to 方向:top/right/bottom/left 
+               2.0~360deg;順時針方向
+            */
+            background: linear-gradient(135deg,red,yellow);
+        }
+        #d2{
+            height:50px;
+            background: linear-gradient(90deg,red,orange,yellow,green,blue,indigo,violet);
+        }
+        #d3{
+            background: linear-gradient(90deg,red 33%,white 33%,white 67%,blue 67%); 
+        }
+        #d4{
+            background: repeating-linear-gradient(45deg,red 30%,white 35%,green 40%,white 45%,red 50%);
+        }
+        /*radial-gradient輻射漸層
+            預設會隨著容器的寬高變形(橢圓形)
+            第一個參數加上circle，就無視容器的寬高，強制用圓形呈現
+        */
+        #r1{
+            width: 400px;
+            height: 200px;
+            background: radial-gradient(yellow,white 50%,black 70%);
+        }
+        #r2{
+            height: 200px;
+            background: repeating-radial-gradient(circle,gray 20%,white 30%,gray 40%);
+        }
+        /*conic-gradient 圓錐漸層
+         預設由上順時針繞圓心一周
+         第一個參數可以修改起始位置 0~360deg
+        */
+        #c1{
+            height: 200px;
+            background: conic-gradient(red,yellow,green,cyan,blue,violet,red)
+        }
+        #c2{
+            height:200px;
+            background:repeating-conic-gradient(red 10%,white 15%,red 20%);
+        }
+    </style>
+</head>
+<body>
+    <div id="d1"></div>
+    <div id="d2"></div>
+    <div id="d3"></div>
+    <div id="d4"></div>
+
+    <div id="r1"></div>
+    <div id="r2"></div>
+
+    <div id="c1"></div>
+    <div id="c2"></div>
+</body>
+</html>
