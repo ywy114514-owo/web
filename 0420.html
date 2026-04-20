@@ -1,0 +1,65 @@
+<html>
+<head>
+    <title>0420-JavaScript輸出與輸入</title>
+    <!--HTML註解-->
+    <style>
+        /*CSS註解*/
+    </style>
+    <script>
+        //單行註解
+        /*JS多行註解*/
+        function sayhello(){
+            name=prompt("你叫什麼名字?");
+           console.log(name);
+           document.getElementById("msg").innerHTML="Hello "+name;
+        }    
+/*  window 函式:
+        alert("訊息")
+        答案=prompt("問答");
+            答案為 string or null
+        是否=confirm("確認");
+            是否為 true/false
+
+        console.log("開發人員訊息");
+
+        document.getElementById("Byid") 透過id取得網頁元素
+            元素.innerHTML 元素內的網頁內容
+            input元素.value
+
+        整數=parseInt(文字)把文字轉換成整數，如果無法轉換就回傳 NaN
+*/
+            function sayhello(){
+                name=prompt("你叫什麼名字?");
+                console.log(name);
+                document.getElementById("msg").innerHTML="Hello "+name;
+            }
+
+            function calc() {
+                userAns=parseInt(prompt("你認為答案是多少?"));
+
+                n1=parseInt(document.getElementById("n1").value);
+                n2=parseInt(document.getElementById("n2").value);
+                if(isNaN(n1)) n1=0;
+                n2=isNaN(n2)? 0 : n2;
+
+
+                document.getElementById("ans").value="答案是"+n1+n2;
+            }
+    </script>
+</head>
+<body>
+    <button onclick="sayhello();">打招呼</button>
+    <div id="msg"></div>
+    <hr>
+    <input type="text"><br>
+    <input type="password"><br>
+    <input type="number"><br>
+    <input type="date"><br>
+    <input type="ddatetime-local"><br>
+    <input type="color"><br>
+    <input type="range" id="rg" value="0" min="0" max="10" oninput="change();">
+    <hr>
+    <input type="number" id="n1"> + <imput type="number" id="n2"> = <button onclick="calc();">?</button>
+    <input type="text" id="ans" disabled>
+</body>
+</html>
