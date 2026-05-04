@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>0504-JS亂數與計時器</title>
+        <style>
+            #lottery{
+                font-size:100pt;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+        </style>
+        <script>
+            function getRand(min,max){
+                return Math.floor(Math.random() * (max - min + 1))+ min;
+            }
+            function getLottery(){
+                setTimeout(clearInterval, 3000, setInterval(()=>{
+                    document.getElementById("lottery").innerHTML=getRand(1,99);
+                },100));
+            }
+            function throwDice(){
+
+                setTimeout(clearInterval, 3000, setInterval((img)=>{}
+                
+
+               
+                  ))}
+        </script>
+    </head>
+    <body>
+        <button onclick="getLottery();">抽籤</button>
+        <div id="lottery">99</div>
+        <hr>
+        <button onclick="throwDice();">擲骰</button>
+        <img id="dice" src="pic/diceQ.png" width="100px" onclick="throwDice();">
+    </body>
+</html>
