@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <title>0511-元素的產生與消失</title>
+        <style>
+            #timebar{
+                width: 600px;
+                height:10px;
+                background-color: green;
+                margin: 2px;
+            }
+            #board{
+                width:600px;
+                height:600px;
+                border:1px solid black;
+                position:relative;
+            }
+            .target{
+                width:50px;
+                height:50px;
+                border-radius: 50%;
+                position:absolute;
+            }
+        </style>
+        <script>
+            var game_started=false;
+            var game_timer=[];
+            var game_second=30;
+            var game_score=0;
+
+                function gameStart(){
+                if(game_started)return;
+                game_started=true;
+                game_score=0
+                game_timer.push(setInterval(() => {
+                game_second-=0.01;
+                document.getElementById("timebar").style.width=(game_second * 20)+"px";
+                if(game_second<10){
+                document.getElementById("timebar").style.backgroundColor="red";
+                }else{
+                document.getElementById("timebar").style.backgroundColor="green";
+                }
+            },10));
+            game_timer.push(setInterval(createTarget,500));
+        }
+        function gameStop(){
+            game_started=false;
+            game_timer.forEach((t)=>{clearInterval(t)})
+        }
+        function createTarget(){
+            var a=document.createElement("div");
+            a.className="target";
+            a.style.top=getRand(0,600-50)+"px";
+            a.style.left=getRand(0,600-50)+"px";
+            a.style.backgroundColor=`rgb(${getRand(0,255)},${getRand(0,255)},${getRand(0,255)})`;
+            a.addEventListener("click",hit);
+            document.getElementById("board").appendChild(a);
+        }
+        function getRand(max,min){
+            return Math.floor(Math.random()*(max-min+1))+min;
+        }
+        function hit(){
+            var elm=event.target;
+            elm.remove();
+            game_score++;
+            document.getElementById("score").innerHTML=game_score; 
+        }
+
+
+
+        </script>
+    </head>
+    <body>
+        <div id="status">得分:<span id="score">0</span>分</div>
+        <div id="timebar"></div>
+        <div id ="board" onclick="clickboard();">
+           
+        </div>
+    </body>
+</html>
