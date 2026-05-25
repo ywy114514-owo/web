@@ -1,0 +1,139 @@
+<html>
+<head>
+    <title>0525-宇宙射擊遊戲</title>
+    <style>
+        @keyframes bg_move{
+            0%{background-position-y: 0px;}
+            100%{background-position-y: 216px;}
+        }
+        #universe{
+            width:600px;
+            height:600px;
+            background: url("pic/bg_stars.jpg");
+            animation:bg_move 2s linear infinite;
+            position: relative;
+        }
+        #ship {
+            width:40px;
+            height:60px;
+            position:absolute;
+            top:540px;
+            left:280px;
+        }
+        .ufo{
+            width:60px;
+            height:40px;
+            position: absolute;
+        }
+        .bullet{
+            width:4px;
+            height:6px;
+            background-color: red;
+            position: absolute;
+            top:534px;
+            left:298px;
+            border-radius: 100% 100% 0 0;
+        }
+    </style>
+    <script>
+        function showPos(obj){
+            obj.style.top=obj.pos.y+"px";
+            obj.style.left=obj.pos.x+"px";
+        }
+        function ship_move(){
+            if(!gameing)return;
+            if(ship.way["ArrowUp"] && ship.pos.y > 0) ship.pos.y--;
+            else if(ship.way["ArrowDown"] && ship.pos.y < 540) ship.pos.y++;
+            else if(ship.way["ArrowLeft"] && ship.pos.x > 0) ship.pos.x--;
+            else if(ship.way["ArrowRight"] && ship.pos.x > 560) ship.pos.x++;
+            ship.style.top=ship.pos.y +"px";
+            ship.styleleft=ship.pos.x +"px";
+        }
+        function bullet_move(b){
+            if(b.pos.y < 0){
+                clearInterval(b.move);
+                b.remove();
+            }else{
+                b.pos.y--;
+                shoePos(b);
+
+                Array.from(document.getElementsByClassName("ufo")).filter((u)=>{
+                    (u.pos.x < b.pos.x) && (u.pos.x + 4) && (u.pos.y + 40 >= b.pos.y);
+                });
+                hit.forEach((u)=>{
+                    clearInterval(u.move);
+                    u.remove();
+                    game_score++;
+                })
+                document.getElementsById("score")
+
+
+
+            }
+        }
+        function shoot(){
+            var b=document.createElement("div");
+            b.className="bullet";
+            b.pos={x:ship.pos.x+18, y:ship.pos.y-6};
+            b.style.top=ship.pos.y +"px";
+            b.style.left=ship.pos.x +"px";
+            document.getElementById("universe").appendChild(b);
+        }
+        function ufo_move(u){
+            if(u.pos.y > 560){
+                clearInterval(u.move);
+                u.remove();
+            }else{
+                u.pos.y++;
+                shoePos(u);
+            }
+        }
+        function ufo_create(){
+            var b=document.createElement("img");
+            u.src="pic/ufo.png";
+            u.className="ufo";
+            u.pos={x:ship.pos.x+18, y:ship.pos.y-6};
+            u.style.top=ship.pos.y +"px";
+            u.style.left=ship.pos.x +"px";
+            document.getElementById("universe").appendChild(u);
+        }
+        function game_start(){
+            gameing=true;
+            
+        }
+        function game_stop(){
+            
+        }
+        function game_init(){
+            ship=document.getElementById("ship");
+            ship.pos={x:280,y:540};
+            ship.way={"ArrowLeft":0,"ArrowRight":0,"ArroeUp":0,"ArrowDown":0};
+            ship.move=setInterval(ship_move,5);
+        }
+        function mykeydown(){
+            event.preventDefault();
+            if(Object.keys(ship.way).includes(event.key)){
+                ship.way[event.key]=1;
+            }else if(event.key==" "){
+                shoot();
+            }
+        }
+        function mykeyup(){
+            event.preventDefault();
+            if(Object.keys(ship.way).includes(event.key)){
+                ship.way[event.key]=0;
+            }else if(event.key==" "){
+                shoot();
+            }
+        }
+
+    </script>
+</head>
+<body onload="game_init" onkeydown="mykeydown()" onkeyup="mykeyup()">
+    <audio></audio>
+    <div id="universe">
+        <img id="ship" src="pic/ship.png">
+    </div>
+
+</body>
+</html>
