@@ -1,0 +1,98 @@
+<html>
+<head>
+    <title>暫定</title>
+    <style>
+        /* 這裡負責美化你的遊戲頁面 */
+        body { 
+            background-color: #1a1a1a; 
+            color: white; 
+            font-family: sans-serif; 
+            text-align: center; 
+            padding-top: 50px;
+        }
+        .stats-box {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            margin: 0 auto 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+        }
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stats-box">
+        <h2 id="era">石器時代</h2>
+        <p>智慧能量: <span id="points">0</span></p>
+        <p>自動產速: <span id="speed">0</span> /秒</p>
+    </div>
+
+    <button onclick="collect()">🧠 思考 (手動+1)</button>
+    <br><br>
+    <button id="upBtn" onclick="upgrade()" disabled>
+        升級科技 (花費 20)
+    </button>
+
+    <script>
+        // 遊戲數值
+        let pts = 0;
+        let autoRate = 0;
+        let cost = 20;
+
+        // 手動點擊功能
+        function collect() {
+            pts += 1;
+            render();
+        }
+
+        // 升級功能
+        function upgrade() {
+            if (pts >= cost) {
+                pts -= cost;
+                autoRate += 1;
+                cost = Math.floor(cost * 1.5); // 每次買完變貴
+                render();
+            }
+        }
+
+        // 更新畫面功能 (同步 JS 到 HTML)
+        function render() {
+            document.getElementById('points').innerText = pts;
+            document.getElementById('speed').innerText = autoRate;
+            document.getElementById('upBtn').innerText = "升級科技 (花費 " + cost + ")";
+            
+            // 按鈕是否可按
+            document.getElementById('upBtn').disabled = (pts < cost);
+
+            // 時代演進觀念
+            if (autoRate >= 10) {
+                document.getElementById('era').innerText = "青銅時代";
+                document.getElementById('era').style.color = "#cd7f32";
+            }
+        }
+
+        // 時間計時器：每秒自動加分
+        setInterval(function() {
+            if (autoRate > 0) {
+                pts += autoRate;
+                render();
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
