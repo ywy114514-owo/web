@@ -2,7 +2,7 @@
 <head>
     <title>暫定</title>
     <style>
-        /* 這裡負責美化你的遊戲頁面 */
+        /* 美化遊戲頁面 */
         body { 
             background-color: #1a1a1a; 
             color: white; 
@@ -39,27 +39,55 @@
         <h2 id="era">石器時代</h2>
         <p>智慧能量: <span id="points">0</span></p>
         <p>自動產速: <span id="speed">0</span> /秒</p>
+        <p>手點威力: +<span id="clickVal">1</span></p>
+        <p id="libDisplay" style="color: #ba68c8; font-weight: bold; margin: 5px 0 0 0;"></p>
+    </div>
     </div>
 
     <button onclick="collect()">🧠 思考 (手動+1)</button>
     <br><br>
+
+    <button id="upClickBtn" onclick="upgradeClick()" disabled style="background-color: #2196F3;">
+        強化大腦 (花費 10, 點擊+1)
+    </button>
+    <br><br>
+
     <button id="upBtn" onclick="upgrade()" disabled>
         升級科技 (花費 20)
+    </button>
+    <br><br>
+    
+    <button id="upBtn2" onclick="upgradeLevel2()" disabled style="background-color: #9C27b0;display:none;">
+        建立圖書館 (花費 200, 產速+10)
     </button>
 
     <script>
         // 遊戲數值
         let pts = 0;
         let autoRate = 0;
+        let clickPower = 1;
+        let libLevel = 0;
+
         let cost = 20;
+        let cost2 = 200;
+        let clickCost = 10;
 
         // 手動點擊功能
         function collect() {
-            pts += 1;
+            pts += clickPower;
             render();
         }
 
-        // 升級功能
+        function upgradeClick() {
+            if (pts >= clickCost) {
+                pts -= clickCost;
+                clickPower += 1;
+                clickCost = Math.floor(clickCost * 1.8); 
+                render();
+            }
+        }
+
+        // 升級功能lv1(自動化)
         function upgrade() {
             if (pts >= cost) {
                 pts -= cost;
@@ -69,14 +97,44 @@
             }
         }
 
-        // 更新畫面功能 (同步 JS 到 HTML)
+        // 升級功能lv2(自動化)
+        function upgradeLevel2() {
+            if (pts >= cost2) {
+                pts -= cost2;
+                autoRate += 10;
+                libLevel += 10;
+                cost2 = Math.floor(cost2 * 1.6); // 每次買完變貴
+                render();
+            }
+        }
+
+        // 更新畫面功能
         function render() {
             document.getElementById('points').innerText = pts;
             document.getElementById('speed').innerText = autoRate;
+            document.getElementById('clickVal').innerText = clickPower;
+
+            // 圖書館升級
+            if (libLevel > 0) {
+                document.getElementById('libDisplay').innerText = "圖書館等級: " + libLevel;
+                document.getElementById('upBtn2').innerText = "升級圖書館 (花費 " + cost2 + ", 產速+10)";
+            } else {
+                document.getElementById('upBtn2').innerText = "建立圖書館 (花費 " + cost2 + ", 產速+10)";
+            }
+
+            // 更新所有按鈕的文字
+            document.getElementById('upClickBtn').innerText = "強化大腦 (花費 " + clickCost + ", 點擊+1)";
             document.getElementById('upBtn').innerText = "升級科技 (花費 " + cost + ")";
-            
+            document.getElementById('upBtn2').innerText = "建立圖書館 (花費 " + cost2 + ")";
+
             // 按鈕是否可按
+            document.getElementById('upClickBtn').disabled = (pts < clickCost);
             document.getElementById('upBtn').disabled = (pts < cost);
+            document.getElementById('upBtn2').disabled = (pts < cost2);
+
+            if(autoRate >= 5){
+            document.getElementById('upBtn2').style.display ="inline-block";
+        }
 
             // 時代演進觀念
             if (autoRate >= 10) {
@@ -84,6 +142,7 @@
                 document.getElementById('era').style.color = "#cd7f32";
             }
         }
+        
 
         // 時間計時器：每秒自動加分
         setInterval(function() {
